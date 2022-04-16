@@ -1,11 +1,11 @@
 name: Deploy module
 
 on:
-  pull_request:
-    types: [ merged ]
+  push:
+    branches:
+      main
 env:
   GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
 
 jobs:
   bump-version-and-release:

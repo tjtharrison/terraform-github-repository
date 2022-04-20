@@ -17,10 +17,10 @@ jobs:
           fetch_depth: 0
       - run: |
           commit_message=$(git log -1 --pretty=format:"%s")
-          if [[ $commit_message == "WIP/*" ]]; then
+          if [[ $commit_message == "WIP/"* ]]; then
             echo "Not ready to PR yet"
             exit 0
-          elif [[ $commit_message == "PR/*" ]]; then
+          elif [[ $commit_message == "PR/"* ]]; then
             echo "Ready to create PR!"
             exit 0
           else

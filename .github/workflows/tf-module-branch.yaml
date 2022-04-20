@@ -9,11 +9,18 @@ env:
   GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
 jobs:
-  check-pr-reay:
+  check-pr-ready:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch_depth: 0
       - run: |
-          echo $(git log -1 --pretty=format:"%s")
+          commit_message=$(git log -1 --pretty=format:"%s")
+          if [[ $commit_message != "PR/*" ]]; then
+            echo "Not ready to PR yet"
+            exit 0
+          elif [[ $commit_message == "PR/*" ]]; then
+            echo "Ready to create PR!"
+            exit 0
+          fi

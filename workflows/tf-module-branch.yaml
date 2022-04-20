@@ -1,0 +1,19 @@
+name: Deploy module
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+env:
+  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+jobs:
+  check-pr-reay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch_depth: 0
+      - run: |
+          echo $(git log -1 --pretty=format:"%s")

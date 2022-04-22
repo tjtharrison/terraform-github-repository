@@ -23,7 +23,7 @@ jobs:
           elif [[ $commit_message == "PR/"* ]]; then
             echo "Ready to create PR!"
             echo CREATE_PR=true >> $GITHUB_ENV
-            echo SEMVER_BUMP=$(echo $commit_message | awk -F'[][]' '{print $2}') >> >> $GITHUB_ENV
+            echo SEMVER_BUMP=$(echo $commit_message | awk -F'[][]' '{print $2}') >> $GITHUB_ENV
             exit 0
           else
             echo "Commit message not in required format"

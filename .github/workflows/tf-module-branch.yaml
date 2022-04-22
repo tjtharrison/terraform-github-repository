@@ -23,6 +23,7 @@ jobs:
           elif [[ $commit_message == "PR/"* ]]; then
             echo "Ready to create PR!"
             echo CREATE_PR=true >> $GITHUB_ENV
+            echo SEMVER_BUMP=$(echo $commit_message | awk -F'[][]' '{print $2}') >> >> $GITHUB_ENV
             exit 0
           else
             echo "Commit message not in required format"
@@ -35,7 +36,7 @@ jobs:
           script: |
             const { repo, owner } = context.repo;
             const result = await github.rest.pulls.create({
-              title: 'Example PR [major]',
+              title: 'Example PR [${{ env.SEMVER_BUMP }}]',
               owner,
               repo,
               head: '${{ github.ref_name }}',
@@ -49,5 +50,5 @@ jobs:
               owner,
               repo,
               issue_number: result.data.number,
-              labels: ['feature', 'automated pr']
+              labels: ['${{ env.SEMVER_BUMP }}']
             });

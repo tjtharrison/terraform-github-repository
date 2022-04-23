@@ -35,27 +35,25 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { repo, owner } = context.repo;
-            const repo_get = repo.slice(0, -1)
-            const existing = await github.rest.pulls.get({
-              repo: repo_get,
-              owner,
-              head: 'tjtharrison:${{ github.ref_name }}',
-            })
-            console.log(existing)
-            const result = await github.rest.pulls.create({
-              title: 'Merge ${{ github.ref_name }} [${{ env.SEMVER_BUMP }}]',
-              owner,
-              repo,
-              head: '${{ github.ref_name }}',
-              base: 'main',
-              body: [
-                '${{ env.COMMIT_MESSAGE }}'
-              ].join('\n')
-            });
-            github.rest.issues.addLabels({
-              owner,
-              repo,
-              issue_number: result.data.number,
-              labels: ['${{ env.SEMVER_BUMP }}']
-            });
+            try {
+              const { repo, owner } = context.repo;
+              const result = await github.rest.pulls.create({
+                title: 'Merge ${{ github.ref_name }} [${{ env.SEMVER_BUMP }}]',
+                owner,
+                repo,
+                head: '${{ github.ref_name }}',
+                base: 'main',
+                body: [
+                  '${{ env.COMMIT_MESSAGE }}'
+                ].join('\n')
+              })
+              github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: result.data.number,
+                labels: ['${{ env.SEMVER_BUMP }}']
+              });
+            } catch(error) {
+              console.log(error)
+            }
+

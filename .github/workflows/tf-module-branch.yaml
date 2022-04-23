@@ -36,6 +36,12 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
+            const existing = await github.rest.pulls.get({
+              repo,
+              owner,
+              head: 'tjtharrison:${{ github.ref_name }}',
+            })
+            console.log(existing)
             const result = await github.rest.pulls.create({
               title: 'Merge ${{ github.ref_name }} [${{ env.SEMVER_BUMP }}]',
               owner,

@@ -54,6 +54,6 @@ jobs:
                 labels: ['${{ env.SEMVER_BUMP }}']
               });
             } catch(error) {
-              console.log(error)
+              console.log(error.message)
             }
 

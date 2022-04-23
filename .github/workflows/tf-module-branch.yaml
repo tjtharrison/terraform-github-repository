@@ -36,6 +36,7 @@ jobs:
         with:
           script: |
             try {
+              const core = require('@actions/core');
               const { repo, owner } = context.repo;
               const result = await github.rest.pulls.create({
                 title: 'Merge ${{ github.ref_name }} [${{ env.SEMVER_BUMP }}]',
@@ -54,6 +55,11 @@ jobs:
                 labels: ['${{ env.SEMVER_BUMP }}']
               });
             } catch(error) {
-              console.log(error.message)
+                error_message = error.message
+                if (error_message.includes("already exists")) == ; {
+                  console.log("PR already exists, nothing to do")
+                } else {
+                    core.setFailed(`Action failed with error ${error.message}`)}
+                }
             }
 

@@ -36,8 +36,9 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
+            const repo_get = repo.slice(0, -1)
             const existing = await github.rest.pulls.get({
-              repo.slice(0, -1),
+              repo: repo_get,
               owner,
               head: 'tjtharrison:${{ github.ref_name }}',
             })

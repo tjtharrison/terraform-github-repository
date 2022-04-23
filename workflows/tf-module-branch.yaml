@@ -38,7 +38,7 @@ jobs:
             try {
               const { repo, owner } = context.repo;
               const result = await github.rest.pulls.create({
-                title: 'Merge ${{ github.ref_name }} [${{ env.SEMVER_BUMP }}]',
+                title: 'Merges branch ${{ github.ref_name }}',
                 owner,
                 repo,
                 head: '${{ github.ref_name }}',

@@ -25,7 +25,6 @@ jobs:
             echo CREATE_PR=true >> $GITHUB_ENV
             echo SEMVER_BUMP=$(echo $commit_message | awk -F'[\\[\\]]' '{print $2}') >> $GITHUB_ENV
             echo COMMIT_MESSAGE=$(echo $commit_message | awk -F'[\\/\\[]' '{print $2}') >> $GITHUB_ENV
-            echo $GITHUB_REPOSITORY
             exit 0
           else
             echo "Commit message not in required format"

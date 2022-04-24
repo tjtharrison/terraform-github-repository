@@ -61,4 +61,3 @@ jobs:
                   console.error(`Something has gone wrong ${error_message}`) 
                 }
             }
-
